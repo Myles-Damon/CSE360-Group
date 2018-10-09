@@ -31,11 +31,12 @@ public class Window extends JFrame{
 		});
 		
 		ArrayList<Activity> actList;
+		ArrayList<PERT_Node> nodeList;
 		
 		actList = new ArrayList<Activity>();
+		nodeList = new ArrayList<PERT_Node>();
 		
-		
-		MainPanel panel1 = new MainPanel(actList);
+		MainPanel panel1 = new MainPanel(actList, nodeList);
 		
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridBagLayout());

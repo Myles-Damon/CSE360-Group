@@ -4,20 +4,20 @@
 public class PERT_Node
 {
 	String name;
-	String dependencies;
+	String[] dependencies;
 	int duration;
-	boolean isStartingNode;
+	boolean isFinalNode;
 	
 	
-	public void PERT_Node(String name, String dependencies, int duration, boolean isStartingNode)
+	public PERT_Node(String name, String[] dependencies, int duration)
 	{
-		name = name;
-		dependencies = dependencies;
-		duration = duration;
-		if(name != null && !dependencies.isEmpty()) 
-			isStartingNode = false;
-		else 
-			isStartingNode = true;
+		this.name = name;
+		this.dependencies = dependencies;
+		this.duration = duration;
+		//this.isFinalNode = isFinalNode;
+		/*
+
+	*/
 	}
 	
 

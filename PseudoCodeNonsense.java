@@ -8,7 +8,8 @@ public class PseudoCodeNonsense
 
 /*		Pseudo-code for tracing all possible paths	*/
 
- 
+// when searching for a node which is used as a dependency by another node, I'll need to iterate through all of the nodes and just 
+// check which one has the name attribute which matches the one referenced by the dependent node
 //
 //
 //for all final nodes

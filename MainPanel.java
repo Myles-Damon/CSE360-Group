@@ -22,11 +22,15 @@ public class MainPanel extends JPanel {
 	private Activity activity;
 	private ArrayList<Activity> actList;
 	
+	private PERT_Node activityNode;
+	public ArrayList<PERT_Node> nodeList;
+	public int numberOfNodes = 0;
 	
-	public MainPanel(ArrayList<Activity> actList){
+	public MainPanel(ArrayList<Activity> actList, ArrayList<PERT_Node> nodeList){
 		
 		this.actList = actList;
-		
+		this.nodeList = nodeList;
+		//int numberOfNodes = 0;
 		
 		JLabel actName = new JLabel("<html>" + "Enter name of activity" + "</html>");
 		JLabel actDep = new JLabel("<html>" +"Enter dependencies of activity. Enter a comma between activities" + "</html>");
@@ -158,7 +162,7 @@ public class MainPanel extends JPanel {
 	        		 String[] actDep;
 	        		 String actTime;
 	        		 int duration;
-	        		 
+					 
 	        		 
 	        		 actName = name.getText();
 	        		 actDep = depend.getText().split(",");
@@ -182,12 +186,16 @@ public class MainPanel extends JPanel {
 	        		 activity.setName(actName);
 	        		 activity.setDependency(actDep);
 	        		 activity.setDuration(duration);
-	        
+					 
+					 activityNode = new PERT_Node(actName, actDep, duration);
+	
+					
 	        	 
 	        	 area.setText(area.getText() + activity.toString());
 	        	 }
-	        	 actList.add(activity);	 
-	 
+				 nodeList.add(activityNode);			 
+	        	 actList.add(activity);
+				 numberOfNodes++;
 	         } //end of actionPerformed method
 	    } //end of ButtonListener class
 	
