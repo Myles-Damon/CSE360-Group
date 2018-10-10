@@ -6,7 +6,7 @@ public class PERT_Node
 	String name;
 	String[] dependencies;
 	int duration;
-	boolean isFinalNode;
+	//boolean isFinalNode;
 	
 	
 	public PERT_Node(String name, String[] dependencies, int duration)

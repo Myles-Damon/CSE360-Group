@@ -67,12 +67,44 @@ public class PseudoCodeNonsense
 		}
 		for(int j = 0; j < finalNodeList.size(); j++)
 		{
+			traceAllPathsHelper(finalNodeList.get(j), finalNodeList.get(j).name, nodeList)
+			// checks for edge case where a node is independent (starting and final node)
+			/*
 			if(finalNodeList.get(j).dependencies == null)
 			{
 				arrayOfPaths.add(finalNodeList.get(j).name);
 			}
+			else
+			*/
+				
 		}
 	}
+	
+	public void traceAllPathsHelper(PERT_Node Node, String pathSoFar, ArrayList<PERT_Node> allNodes)
+	{
+		// when recursion bottoms out, add the completed path to the arrayOfPaths and return
+		if(Node.dependencies == null)
+		{
+			arrayOfPaths.add(pathSoFar);
+			return;
+		}
+		// continue depth-first recursion 
+		else
+		{
+			for(int j = 0; j < Node.dependencies.length; j++)
+			{
+				for(int k = 0; k < allNodes.size(); k++;)
+				{
+					if(allNodes.get(k).name == Node.dependencies[j])
+					{
+						pathSoFar = pathSoFar + " -> " + allNodes.get(k).name;
+						traceAllPathsHelper(allNodes.get(k), pathSoFar, allNodes);
+					}
+				}
+			}
+		}
+		return;
+	}	
 /*		Pseudo-code for tracing all possible paths	*/
 
 // when searching for a node which is used as a dependency by another node, I'll need to iterate through all of the nodes and just 
