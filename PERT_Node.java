@@ -14,6 +14,7 @@ public class PERT_Node
 		this.name = name;
 		this.dependencies = dependencies;
 		this.duration = duration;
+		System.out.println("PERT Node made!");
 		//this.isFinalNode = isFinalNode;
 		/*
 

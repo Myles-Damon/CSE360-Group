@@ -21,6 +21,7 @@ public class MainPanel extends JPanel {
 	private JPanel inputAndButtons;
 	private Activity activity;
 	private ArrayList<Activity> actList;
+	private PseudoCodeNonsense objectForParsing;
 	
 	private PERT_Node activityNode;
 	public ArrayList<PERT_Node> nodeList;
@@ -145,14 +146,32 @@ public class MainPanel extends JPanel {
 	        	 }
 	        	 if(event.getSource() == process){
 	        		 
+					 objectForParsing = new PseudoCodeNonsense(numberOfNodes, nodeList);
+					 System.out.println("hello");
 	        		 area.setText("");
-	        		 System.out.println("This is how many activities are in the list" + actList.size());
-	        		 for(int i = 0; i< actList.size(); i++){
+	        		 /*
+					 System.out.println("This is how many activities are in the list" + actList.size());
+	        		 for(int i = 0; i< actList.size(); i++)
+					 {
 	        			 
 	        			 area.setText(area.getText() + actList.get(i).toString());
 	        			 System.out.println(area.getText() + actList.get(i).toString());
 	        		 }
-	        		 
+					 */
+					 objectForParsing.findFinalNodes();
+					 objectForParsing.traceAllPaths();
+					 //System.out.println(objectForParsing.arrayOfPaths.get(0));
+					 if (objectForParsing.arrayOfPaths.get(0) == null)
+					 {
+						 System.out.println("this is your error");
+					 }
+					 else
+					 {
+						for (int i = 0; i < objectForParsing.arrayOfPaths.size(); i++)
+						{
+							System.out.println(objectForParsing.arrayOfPaths.get(i));
+						}
+	        		 }
 	        	 }
 	        	  
 	        	 if(event.getSource() == add){
@@ -163,9 +182,11 @@ public class MainPanel extends JPanel {
 	        		 String actTime;
 	        		 int duration;
 					 
+					 
 	        		 
 	        		 actName = name.getText();
 	        		 actDep = depend.getText().split(",");
+					 //System.out.println(actDep);
 	        		 //Must first read in time as a string and then parse as integer
 	        		 actTime = time.getText();
 	        		 
@@ -185,17 +206,19 @@ public class MainPanel extends JPanel {
 	        		 activity = new Activity();
 	        		 activity.setName(actName);
 	        		 activity.setDependency(actDep);
+					 System.out.println(actName + " is dependent on " + actDep[0]);
 	        		 activity.setDuration(duration);
 					 
 					 activityNode = new PERT_Node(actName, actDep, duration);
-	
-					
+
+					 nodeList.add(activityNode);			 
+					 actList.add(activity);
+					 numberOfNodes++;					 
+						
 	        	 
 	        	 area.setText(area.getText() + activity.toString());
 	        	 }
-				 nodeList.add(activityNode);			 
-	        	 actList.add(activity);
-				 numberOfNodes++;
+
 	         } //end of actionPerformed method
 	    } //end of ButtonListener class
 	
