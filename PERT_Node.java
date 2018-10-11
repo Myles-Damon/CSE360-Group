@@ -24,6 +24,14 @@ public class PERT_Node implements Cloneable
 		this.dependencies[index] = dependency;
 	}
 	
+	public void setDependencies(String[] dependenciesIn, int numD, boolean boo)
+	{
+		for (int i = 0; i < numD; i++)
+		{
+			this.dependencies[i] = dependenciesIn[i];
+		}
+	}
+	
 	public PERT_Node(String name, String[] dependencies, int duration)
 	{
 		this.name = name;
