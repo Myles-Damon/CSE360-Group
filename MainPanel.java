@@ -30,7 +30,7 @@ public class MainPanel extends JPanel {
 	public MainPanel(ArrayList<Activity> actList, ArrayList<PERT_Node> nodeList){
 		
 		this.actList = actList;
-		this.nodeList = nodeList;
+		this.nodeList = new ArrayList<PERT_Node>();
 		//int numberOfNodes = 0;
 		
 		JLabel actName = new JLabel("<html>" + "Enter name of activity" + "</html>");
@@ -147,7 +147,7 @@ public class MainPanel extends JPanel {
 	        	 if(event.getSource() == process){
 	        		 
 					 objectForParsing = new PseudoCodeNonsense(numberOfNodes, nodeList);
-					 System.out.println("hello");
+					 //System.out.println("hello");
 	        		 area.setText("");
 	        		 /*
 					 System.out.println("This is how many activities are in the list" + actList.size());
@@ -160,19 +160,20 @@ public class MainPanel extends JPanel {
 					 */
 					 objectForParsing.findFinalNodes();
 					 objectForParsing.traceAllPaths();
-					 //System.out.println(objectForParsing.arrayOfPaths.get(0));
-					 if (objectForParsing.arrayOfPaths.get(0) == null)
+					 System.out.println("finished finding and tracing");
+					 /*
+					 if (objectForParsing.arrayOfPaths == null)
 					 {
 						 System.out.println("this is your error");
 					 }
-					 else
-					 {
-						for (int i = 0; i < objectForParsing.arrayOfPaths.size(); i++)
-						{
-							System.out.println(objectForParsing.arrayOfPaths.get(i));
-						}
-	        		 }
-	        	 }
+					 System.out.println(objectForParsing.arrayOfPaths.get(0));
+					 */
+					for (int i = 0; i < objectForParsing.arrayOfPaths.size(); i++)
+					{
+						System.out.println(objectForParsing.arrayOfPaths.get(i));
+					}
+	        		
+	        	 }//end of "process" event handler
 	        	  
 	        	 if(event.getSource() == add){
 	        		 //read the information from the text fields
@@ -210,14 +211,18 @@ public class MainPanel extends JPanel {
 	        		 activity.setDuration(duration);
 					 
 					 activityNode = new PERT_Node(actName, actDep, duration);
-
-					 nodeList.add(activityNode);			 
+					 activityNode.setName(actName);
+					 activityNode.setDependencies(actDep[0], 0);
+					 nodeList.add(activityNode.clone());			 
 					 actList.add(activity);
 					 numberOfNodes++;					 
-						
+
+	        		 name.setText("");
+	        		 depend.setText("");
+	        		 time.setText("");					 
 	        	 
-	        	 area.setText(area.getText() + activity.toString());
-	        	 }
+	        	 //area.setText(area.getText() + activity.toString());
+	        	 }//end of "add" event handler
 
 	         } //end of actionPerformed method
 	    } //end of ButtonListener class

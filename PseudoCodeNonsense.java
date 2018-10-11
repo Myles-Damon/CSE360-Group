@@ -6,20 +6,28 @@ public class PseudoCodeNonsense
 	ArrayList<String> arrayOfPaths;// = new String[20];
 	ArrayList<PERT_Node> nodeList;
 	ArrayList<PERT_Node> finalNodeList;
-	int i;
+	PERT_Node tempNode;
+	boolean isFinalNode;
 	int numOfNodes;
+	int counter = 0;
 	String firstLoopString;
 	String secondLoopString;
+	int[] finalNodeIndexes;
 	
 	// constructor
-	public PseudoCodeNonsense(int numberOfNodes, ArrayList<PERT_Node> nodeList)
+	public PseudoCodeNonsense(int numberOfNodes, ArrayList<PERT_Node> nodeListIn)
 	{
 		this.finalNodeList = new ArrayList<PERT_Node>();
 		this.arrayOfPaths = new ArrayList<String>();
-		this.nodeList = nodeList;
+		this.nodeList = new ArrayList<PERT_Node>();
+		tempNode = nodeListIn.get(0);
+		for (int i = 0; i < nodeListIn.size(); i++)
+		{
+			this.nodeList.add(nodeListIn.get(i).clone());
+		}
 		this.numOfNodes = numberOfNodes;
-		i = 0;
-		for(int j = 0; j < nodeList.size(); j++)
+		//this.finalNodeIndexes = new int[];
+		for(int j = 0; j < this.nodeList.size(); j++)
 		{
 			System.out.println("hi " + nodeList.get(j).name);
 		}
@@ -27,11 +35,10 @@ public class PseudoCodeNonsense
 	}
 //2^n is the MAX number of paths given n nodes, I think... I just put 20 here to test
 
-	//int i = 0;
 
 	public void findFinalNodes()
 	{
-		if(this.nodeList.get(0) == null)// || this.arrayOfPaths.get(0) == null)
+		if(this.nodeList == null)// || this.arrayOfPaths.get(0) == null)
 		{
 			System.out.println("give me a node list please");
 			return;
@@ -40,17 +47,17 @@ public class PseudoCodeNonsense
 		// need to decide which nodes are final nodes
 		for (int j = 0; j < numOfNodes; j++)
 		{
-			i = 0; // reset the flag for every loop; the default assumption is that it is a final node
-			firstLoopString = nodeList.get(j).name;//[j].name;
+			isFinalNode = true; // reset the flag for every loop; the default assumption is that it is a final node
+			//firstLoopString = nodeList.get(j).name;//[j].name;
 			for (int k = 0; k < numOfNodes; k++)
 			{
-				if (nodeList.get(k).dependencies[0] != null && !nodeList.get(k).dependencies[0].equals(""))
+				if (nodeList.get(k).dependencies[0] != null)
 				{
 					for (int s = 0; s < nodeList.get(k).dependencies.length; s++)
 					{
-						if (firstLoopString.equals(nodeList.get(k).dependencies[s]))
+						if (nodeList.get(j).name.equals(nodeList.get(k).dependencies[s]))
 						{
-							i = 1; 	// set flag making note that the node is listed as 
+							isFinalNode = false; 	// set flag making note that the node is listed as 
 									// a dependency and so it's not a final node
 						}
 					}
@@ -58,27 +65,16 @@ public class PseudoCodeNonsense
 			}
 			// If the node isn't listed as a dependency anywhere
 			// add it to the list of "final nodes"
-			if(i == 0)
+			if(isFinalNode == true)
 			{
-				finalNodeList.add(nodeList.get(j));
+				System.out.println(j);
+				System.out.println("found a final node");
+				//finalNodeIndexes[counter] = j;
+				//counter++;
+				finalNodeList.add(nodeList.get(j).clone());
 			}
 		}
-		if(finalNodeList.get(0) == null)
-		{
-			System.out.println("yeah it's fucked");
-		}
-		System.out.flush();
-		else if(finalNodeList.get(0).name.equals(""))
-		{
-			System.out.println("yeah it's an empty string");
-		}
-		System.out.flush();
-		else
-		{
-			System.out.println("\n a" + finalNodeList.get(0).name + "\n");
-		}
-		System.out.flush();
-		System.out.println("a " + finalNodeList.get(0);
+		System.out.println(finalNodeList.get(0).name);
 		System.out.println("All final nodes found");
 		return;
 	}	
@@ -92,7 +88,7 @@ public class PseudoCodeNonsense
 		}
 		for(int j = 0; j < finalNodeList.size(); j++)
 		{
-			traceAllPathsHelper(finalNodeList.get(j), finalNodeList.get(j).name, nodeList);
+			traceAllPathsHelper(finalNodeList.get(j), /*finalNodeList.get(j).name*/"");
 			// checks for edge case where a node is independent (starting and final node)
 			/*
 			if(finalNodeList.get(j).dependencies == null)
@@ -101,19 +97,22 @@ public class PseudoCodeNonsense
 			}
 			else
 			*/
-			System.out.println("test");	
+			System.out.println("final node " + finalNodeList.get(j).name + " evaluated");	
 		}
 		System.out.println("trace all paths completed");
 		return;
 	}
 	
-	public void traceAllPathsHelper(PERT_Node Node, String pathSoFar, ArrayList<PERT_Node> allNodes)
+	public void traceAllPathsHelper(PERT_Node Node, String pathSoFar)
 	{
+		System.out.println(Node.dependencies[0]);
 		// when recursion bottoms out, add the completed path to the arrayOfPaths and return
-		if(Node.dependencies[0] == null)
+		if(Node.dependencies[0] == null || Node.dependencies[0].equals(""))
 		{
+			pathSoFar = pathSoFar + " -> " + Node.name;
+			System.out.println(pathSoFar);
 			arrayOfPaths.add(pathSoFar);
-			System.out.println("one done");
+			System.out.println("path added");
 			return;
 		}
 		// continue depth-first recursion 
@@ -121,12 +120,13 @@ public class PseudoCodeNonsense
 		{
 			for(int j = 0; j < Node.dependencies.length; j++)
 			{
-				for(int k = 0; k < allNodes.size(); k++)
+				for(int k = 0; k < nodeList.size(); k++)
 				{
-					if(allNodes.get(k).name.equals(Node.dependencies[j]))
+					if(nodeList.get(k).name.equals(Node.dependencies[j]))
 					{
-						pathSoFar = pathSoFar + " -> " + allNodes.get(k).name;
-						traceAllPathsHelper(allNodes.get(k), pathSoFar, allNodes);
+						pathSoFar = pathSoFar + " -> " + Node.name;
+						System.out.println("recursion taken, path so far: " + pathSoFar);
+						traceAllPathsHelper(nodeList.get(k), pathSoFar);
 					}
 				}
 			}
