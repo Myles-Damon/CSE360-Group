@@ -184,7 +184,7 @@ public class MainPanel extends JPanel {
 	        		 
 	        		 //set up labels and a Jpanel for labels
 	        		 JLabel jVer = new JLabel("<html>"+ "VERSION:" + "</html>");
-	        		 JLabel ver = new JLabel("<html>" + "versionNumber" + "<br/>" + "</html>");
+	        		 JLabel ver = new JLabel("<html>" + "1.2.10.09.18" + "<br/>" + "</html>");
  	        		 JLabel jDevs = new JLabel("<html>" + "DEVELOPERS:" + "</html>");
  	        		 JLabel created = new JLabel("<html>" + "Created in 2018" + "</html>");
  	        		 JLabel update = new JLabel("<html>" + "Last updated in 2018" + "</html>");
