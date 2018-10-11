@@ -22,7 +22,7 @@ public class MainPanel extends JPanel {
 	private ArrayList<Activity> actList;
 	private PseudoCodeNonsense objectForParsing;
 	
-	priavte PERT_Node activityNode;
+	private PERT_Node activityNode;
 	public ArrayList<PERT_Node> nodeList;
 	public int numberOfNodes = 0;
 
