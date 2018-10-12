@@ -253,9 +253,9 @@ public class MainPanel extends JPanel {
 						
 						for (int i = 0; i < objectForParsing.arrayOfPaths.size(); i++)
 						{
-							System.out.println(objectForParsing.arrayOfPaths.get(i));
+							System.out.println(objectForParsing.arrayOfPaths.get(i) + " : " + objectForParsing.arrayOfPathDurations.get(i)) ;
 						}
-						
+
 						// what is this for loop below for? - Myles
 	        		 	for(int i = 0; i< actList.size(); i++){
 		        			 
