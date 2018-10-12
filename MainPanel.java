@@ -250,11 +250,15 @@ public class MainPanel extends JPanel {
 						objectForParsing.findFinalNodes();
 						objectForParsing.traceAllPaths();
 						System.out.println("finished finding and tracing");
-						
+
+						String message;
 						for (int i = 0; i < objectForParsing.arrayOfPaths.size(); i++)
 						{
-							System.out.println(objectForParsing.arrayOfPaths.get(i) + " : " + objectForParsing.arrayOfPathDurations.get(i)) ;
+							message += objectForParsing.arrayOfPaths.get(i) + " : " +objectForParsing.arrayOfPathDurations.get(i) + "\n");
+							System.out.println(objectForParsing.arrayOfPaths.get(i));
 						}
+
+						JOptionPane.showMessageDialog(null, message, JOptionPane.PLAIN_MESSAGE);
 
 						// what is this for loop below for? - Myles
 	        		 	for(int i = 0; i< actList.size(); i++){
