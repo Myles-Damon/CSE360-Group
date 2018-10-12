@@ -13,6 +13,7 @@ public class PseudoCodeNonsense
 	String firstLoopString;
 	String secondLoopString;
 	int[] finalNodeIndexes;
+	ArrayList<Integer> arrayOfPathDurations;
 	
 	// constructor
 	public PseudoCodeNonsense(int numberOfNodes, ArrayList<PERT_Node> nodeListIn)
@@ -20,6 +21,7 @@ public class PseudoCodeNonsense
 		this.finalNodeList = new ArrayList<PERT_Node>();
 		this.arrayOfPaths = new ArrayList<String>();
 		this.nodeList = new ArrayList<PERT_Node>();
+		arrayOfPathDurations = new ArrayList<Integer>();
 		tempNode = nodeListIn.get(0);
 		for (int i = 0; i < nodeListIn.size(); i++)
 		{
@@ -88,7 +90,7 @@ public class PseudoCodeNonsense
 		}
 		for(int j = 0; j < finalNodeList.size(); j++)
 		{
-			traceAllPathsHelper(finalNodeList.get(j), /*finalNodeList.get(j).name*/"");
+			traceAllPathsHelper(finalNodeList.get(j), /*finalNodeList.get(j).name*/"", 0);
 			// checks for edge case where a node is independent (starting and final node)
 			/*
 			if(finalNodeList.get(j).dependencies == null)
@@ -103,15 +105,17 @@ public class PseudoCodeNonsense
 		return;
 	}
 	
-	public void traceAllPathsHelper(PERT_Node Node, String pathSoFar)
+	public void traceAllPathsHelper(PERT_Node Node, String pathSoFar, int pathDuration)
 	{
 		System.out.println(Node.dependencies[0]);
 		// when recursion bottoms out, add the completed path to the arrayOfPaths and return
 		if(Node.dependencies[0] == null || Node.dependencies[0].equals(""))
 		{
 			pathSoFar = pathSoFar + " -> " + Node.name;
+			pathDuration += Node.duration;
 			System.out.println(pathSoFar);
 			arrayOfPaths.add(pathSoFar);
+			arrayOfPathDurations.add(pathDuration);
 			System.out.println("path added");
 			return;
 		}
@@ -125,8 +129,9 @@ public class PseudoCodeNonsense
 					if(nodeList.get(k).name.equals(Node.dependencies[j]))
 					{
 						pathSoFar = pathSoFar + " -> " + Node.name;
+						pathDuration += Node.duration;
 						System.out.println("recursion taken, path so far: " + pathSoFar);
-						traceAllPathsHelper(nodeList.get(k), pathSoFar);
+						traceAllPathsHelper(nodeList.get(k), pathSoFar, pathDuration);
 					}
 				}
 			}
