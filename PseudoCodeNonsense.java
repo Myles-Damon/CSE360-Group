@@ -111,7 +111,7 @@ public class PseudoCodeNonsense
 		// when recursion bottoms out, add the completed path to the arrayOfPaths and return
 		if(Node.dependencies[0] == null || Node.dependencies[0].equals(""))
 		{
-			pathSoFar = pathSoFar + " -> " + Node.name;
+			pathSoFar = Node.name + " -> " + pathSoFar;
 			pathDuration += Node.duration;
 			System.out.println(pathSoFar);
 			arrayOfPaths.add(pathSoFar);
@@ -128,10 +128,10 @@ public class PseudoCodeNonsense
 				{
 					if(nodeList.get(k).name.equals(Node.dependencies[j]))
 					{
-						pathSoFar = pathSoFar + " -> " + Node.name;
-						pathDuration += Node.duration;
+						//pathSoFar = Node.name + " -> " + pathSoFar;
+						//pathDuration += Node.duration;
 						System.out.println("recursion taken, path so far: " + pathSoFar);
-						traceAllPathsHelper(nodeList.get(k), pathSoFar, pathDuration);
+						traceAllPathsHelper(nodeList.get(k), Node.name + " -> " + pathSoFar, pathDuration + Node.duration);
 					}
 				}
 			}
