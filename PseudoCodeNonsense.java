@@ -28,7 +28,6 @@ public class PseudoCodeNonsense
 			this.nodeList.add(nodeListIn.get(i).clone());
 		}
 		this.numOfNodes = numberOfNodes;
-		//this.finalNodeIndexes = new int[];
 		for(int j = 0; j < this.nodeList.size(); j++)
 		{
 			System.out.println("hi " + nodeList.get(j).name);
@@ -50,7 +49,6 @@ public class PseudoCodeNonsense
 		for (int j = 0; j < numOfNodes; j++)
 		{
 			isFinalNode = true; // reset the flag for every loop; the default assumption is that it is a final node
-			//firstLoopString = nodeList.get(j).name;//[j].name;
 			for (int k = 0; k < numOfNodes; k++)
 			{
 				if (nodeList.get(k).dependencies[0] != null)
@@ -71,8 +69,7 @@ public class PseudoCodeNonsense
 			{
 				System.out.println(j);
 				System.out.println("found a final node");
-				//finalNodeIndexes[counter] = j;
-				//counter++;
+
 				finalNodeList.add(nodeList.get(j).clone());
 			}
 		}
@@ -90,15 +87,8 @@ public class PseudoCodeNonsense
 		}
 		for(int j = 0; j < finalNodeList.size(); j++)
 		{
-			traceAllPathsHelper(finalNodeList.get(j), /*finalNodeList.get(j).name*/"", 0);
-			// checks for edge case where a node is independent (starting and final node)
-			/*
-			if(finalNodeList.get(j).dependencies == null)
-			{
-				arrayOfPaths.add(finalNodeList.get(j).name);
-			}
-			else
-			*/
+			traceAllPathsHelper(finalNodeList.get(j), "", 0);
+
 			System.out.println("final node " + finalNodeList.get(j).name + " evaluated");	
 		}
 		System.out.println("trace all paths completed");
@@ -128,8 +118,6 @@ public class PseudoCodeNonsense
 				{
 					if(nodeList.get(k).name.equals(Node.dependencies[j]))
 					{
-						//pathSoFar = Node.name + " -> " + pathSoFar;
-						//pathDuration += Node.duration;
 						System.out.println("recursion taken, path so far: " + pathSoFar);
 						traceAllPathsHelper(nodeList.get(k), Node.name + " -> " + pathSoFar, pathDuration + Node.duration);
 					}
@@ -138,7 +126,9 @@ public class PseudoCodeNonsense
 		}
 		System.out.println("finished tracing all paths");
 		return;
-	}	
+	}
+
+	
 /*		Pseudo-code for tracing all possible paths	*/
 
 // when searching for a node which is used as a dependency by another node, I'll need to iterate through all of the nodes and just 

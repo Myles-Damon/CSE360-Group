@@ -6,7 +6,6 @@ public class PERT_Node implements Cloneable
 	String[] dependencies = new String[10];
 	String name;
 	int duration;
-	//boolean isFinalNode;
 	
 	
 	public PERT_Node()
@@ -38,10 +37,6 @@ public class PERT_Node implements Cloneable
 		this.dependencies = dependencies.clone();
 		this.duration = duration;
 		System.out.println("PERT Node made!");
-		//this.isFinalNode = isFinalNode;
-		/*
-
-	*/
 	}
 	
 	public PERT_Node clone()

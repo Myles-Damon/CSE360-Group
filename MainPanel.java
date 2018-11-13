@@ -9,6 +9,7 @@ public class MainPanel extends JPanel {
 	private JButton add;
 	private JButton help;
 	private JButton process;
+	private JButton criticalPath;
 	private JButton about;
 	private JButton reset;
 	private JButton quit;
@@ -21,6 +22,8 @@ public class MainPanel extends JPanel {
 	private Activity activity;
 	private ArrayList<Activity> actList;
 	private PseudoCodeNonsense objectForParsing;
+	
+	private boolean processBool = false;
 	
 	private PERT_Node activityNode;
 	public ArrayList<PERT_Node> nodeList;
@@ -70,6 +73,9 @@ public class MainPanel extends JPanel {
 	      
 	      quit = new JButton("<html>"+ "quit" +"</html>");
 	      quit.addActionListener(new ButtonListener());
+		  
+		  criticalPath = new JButton("<html>"+ "critical path" +"</html>");
+	      criticalPath.addActionListener(new ButtonListener());
 	      
 	      
 	      area = new JTextArea();
@@ -83,6 +89,7 @@ public class MainPanel extends JPanel {
 	      buttonPanel.add(about);
 	      buttonPanel.add(reset);
 	      buttonPanel.add(process);
+		  buttonPanel.add(criticalPath);
 	      
 	    //panel to hold input & add button
 	    JPanel inAddButton = new JPanel();
@@ -243,6 +250,8 @@ public class MainPanel extends JPanel {
 	        		}
 	        		else{
 						
+						processBool = true;
+						
 						objectForParsing = new PseudoCodeNonsense(numberOfNodes, nodeList);
 	        		
 						area.setText("");
@@ -267,9 +276,66 @@ public class MainPanel extends JPanel {
 		        			// System.out.println(actList.get(i).toString());
 	        		 	}
 	        		}
-	        		    		
 	        	 }
-	
+				 
+				 ////////////////////////////////////////////////
+				 /// Myles' Temporary Test Code               ///
+				 ////////////////////////////////////////////////
+				 
+				 if(event.getSource() == criticalPath)
+				 {
+					if(processBool == false)
+					{
+						System.out.println("Please process your nodes first");
+					}
+					else
+					{
+						System.out.println("Calculating critical paths!");
+						int longestPathDur = 0;
+						int tempT = objectForParsing.arrayOfPathDurations.size();
+						int[] critPathDurIndexArray = new int[tempT];
+						int cPDIA_index = 0;
+						
+						// Calculate duration of longest path
+						System.out.println("Calculating duration of longest path");
+						for(int i = 0; i < tempT; i++)
+						{
+							if(objectForParsing.arrayOfPathDurations.get(i) > longestPathDur)
+							{
+								longestPathDur = objectForParsing.arrayOfPathDurations.get(i);
+							}
+						}
+						
+						
+						// Select all paths with duration == longest path duration
+						System.out.print("Finding all paths with duration == longest path duration");
+						for(int i = 0; i < tempT; i++)
+						{
+							if(objectForParsing.arrayOfPathDurations.get(i) == longestPathDur)
+							{
+								critPathDurIndexArray[cPDIA_index] = i;
+								cPDIA_index++;
+							}
+						}
+						System.out.println("Finished finding all longest paths");
+						
+						
+						if(cPDIA_index > 0)
+						{
+							System.out.println("Critical Path(s): \n");
+							
+							for(int i = 0; i < cPDIA_index; i++)
+							{
+								System.out.println(objectForParsing.arrayOfPaths.get(critPathDurIndexArray[i]));
+							}
+						}
+					}
+				 }
+				
+				///////////////////////////////////////////////////
+				/// END of Myles' Temporary Test Code           ///
+				///////////////////////////////////////////////////
+				
 	        	 if(event.getSource() == add){
 	        		
 	        		 String actName;
@@ -301,7 +367,6 @@ public class MainPanel extends JPanel {
 	 	        		else if(time.getText().equals("")){
 	 	        				JOptionPane.showMessageDialog(null, "Please enter a positive integer in the field 'DURATION'", "Error: Incomplete Data", JOptionPane.ERROR_MESSAGE);
 	 	        			 }
-	 	        			        			      			
 	 	        		else if(Integer.parseInt(time.getText()) < 1){
 	        				 
 	        				 JOptionPane.showMessageDialog(null, "Please enter a positive integer in the field 'duration'", "Error: Negative Number", JOptionPane.ERROR_MESSAGE);	        				
