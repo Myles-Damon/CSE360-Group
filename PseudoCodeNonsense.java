@@ -157,10 +157,15 @@ return happily; // :D
 
 2. That a node isn't listed as a dependency by a node upon which it (or any future child node) depends (IE no node loops) [Also solved by checking to make sure that final nodes exist.]
 
-
+	> Could take any node we're adding to the tree and check to see if its name is listed as a dependency by any previous nodes. Would be really easy if we could make the trees (at least temporarily)
+	> Linked-Lists so that traversal is O(1) instead of O(n) every time.
 
 3a. Need to make sure there's at least one starting node
-3b. Need to make sure that every node eventually can trace its ancestry back to a starting node
+	
+	> Could make a list of all starting nodes, DFS from them and mark every searched node as black, and then iterate through the node list one last time to make sure every node is black.
+	> If not all nodes are black, then there are some nodes which aren't starting nodes and aren't connected to any nodes
+	
+3b. Need to make sure that every non-starting node eventually can trace its ancestry back to a starting node, or a node which exists (1.).
 
 
 */
