@@ -127,7 +127,45 @@ public class PseudoCodeNonsense
 		System.out.println("finished tracing all paths");
 		return;
 	}
+/*
+Need to fix algorithm so that it checks:
+--------------------------------------------
 
+1. If a node lists another node as a dependency when that other node doesn't exist
+
+//(Pseudo-code)
+for (each node in node list)
+{
+	for (each dependency in the nodeA.dependencies)
+	{
+		dependecyExistsBool = false;
+		for (each node in node list)
+		{
+			if (node.name = nodeA.dependency)
+			{
+				dependecyExistsBool = true;
+			}
+		}
+		if (dependecyExistsBool = false)
+			throw error;
+			return error;
+	}
+}
+return happily; // :D
+
+			
+
+2. That a node isn't listed as a dependency by a node upon which it (or any future child node) depends (IE no node loops) [Also solved by checking to make sure that final nodes exist.]
+
+
+
+3a. Need to make sure there's at least one starting node
+3b. Need to make sure that every node eventually can trace its ancestry back to a starting node
+
+
+*/
+	
+	
 	
 /*		Pseudo-code for tracing all possible paths	*/
 

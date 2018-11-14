@@ -286,6 +286,7 @@ public class MainPanel extends JPanel {
 				 {
 					if(processBool == false)
 					{
+						JOptionPane.showMessageDialog(null, "Please create/process your nodes first", "Critical Path ERROR", JOptionPane.INFORMATION_MESSAGE);
 						System.out.println("Please process your nodes first");
 					}
 					else
@@ -343,6 +344,7 @@ public class MainPanel extends JPanel {
 	        		 String[] testDep;
 	        		 int duration = 0;
 	        		 int flag = 0;
+					 
 	        		 
 	        		 testDep = depend.getText().split(",");
 	        		 //conditions for all the different error messages
@@ -401,6 +403,7 @@ public class MainPanel extends JPanel {
 			        		 depend.setText("");
 			        		 time.setText("");
 			        		 
+							 processBool = false;
 	        			 }
 	        		 }
 	        		 catch(NumberFormatException numExcept){
