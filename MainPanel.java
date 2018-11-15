@@ -246,7 +246,110 @@ public class MainPanel extends JPanel {
                     nodeList.clear();
                 }
             }
+             if(event.getSource() == edit) {
+	        		
+	        		 if(processBool == false)
+						{
+							JOptionPane.showMessageDialog(null, "Please process your nodes first", "Edit ERROR", JOptionPane.INFORMATION_MESSAGE);
+							System.out.println("Please process your nodes first");
+						}
+	        		 else if(actList.isEmpty()){
+	        			 
+	        			 JOptionPane.showMessageDialog(null, "There is no data to edit.", "Error: No data to process", JOptionPane.ERROR_MESSAGE);
+	        		}
+	        		 else {
+	        			 
+	        		 int duration = 0;
+	        		 int index = -1;
+	        		 
+	        		 boolean isValid = false;
+	        		 boolean change = false;
+	        		 
+	        		 String nodeName = "";
+	        		 JTextField nName = new JTextField(5);
+	        		 JTextField durationF = new JTextField(5);
+	        		 JLabel oN = new JLabel("Enter Name of Activity to Edit:");
 
+	        		 JLabel d = new JLabel("New Duration:");
+	        
+	        		 JPanel panel = new JPanel();
+	        		 
+	        		 panel.add(oN);
+	        		 panel.add(nName);
+	        		 panel.add(Box.createHorizontalStrut(5));
+	        		 panel.add(d);
+	        		 panel.add(durationF);  		 
+	        		
+	        		int result = JOptionPane.showConfirmDialog(null,panel, "Edit Activity", JOptionPane.OK_CANCEL_OPTION);
+	        		  
+	        		if(result == JOptionPane.OK_OPTION) {
+	        		 
+	        			try {
+	        		nodeName = nName.getText();
+	        		
+	        
+	        		if(Integer.parseInt(durationF.getText()) <= 0) {
+	        			 JOptionPane.showMessageDialog(null, "Please enter a positive integer (greater than 0) in the field 'New Duration'", "Error: Negative Number", JOptionPane.ERROR_MESSAGE);	
+	        			 
+	        			}
+	        		
+	        		else {
+	        			duration = Integer.parseInt(durationF.getText());	
+	        			isValid = true;
+	        			}
+	        		}
+		        		 catch(NumberFormatException numExcept){
+		        			 
+		        			 JOptionPane.showMessageDialog(null, "Please enter a positive integer in the field 'New Duration'", "Error: Incorrect Data Type", JOptionPane.ERROR_MESSAGE);	        	
+		        			
+		        		 		}
+	        		//look for a match 
+	        		if(isValid){
+	        			
+	        			change = true;
+	        		
+	        		 for(int i = 0; i < nodeList.size(); i++) {
+	        			 
+	        			if(nodeName.equals(nodeList.get(i).name)) {
+	        			
+	        				nodeList.get(i).duration = duration;
+	        				
+	        				index = i;
+	        				
+	        				System.out.println("This is the new duration at index" + i + " :\n");
+	        				
+	        				System.out.println(nodeList.get(i).name);
+	        				System.out.println(nodeList.get(i).duration);
+	        			 }
+	        			 
+	        		 }
+	        	}
+	        	
+	        		if(change){
+	        		 //updates the text area to reflect the changed node
+		        		 try {
+			        		 actList.get(index).setDuration(duration);
+			        		 
+			        		 area.setText("");
+			        		 
+			        		 for(int i =0; i < actList.size(); i++) {
+			        			 
+			        			 area.setText(area.getText() + actList.get(i).toString());
+			        		 		}
+			        		 
+		        		 	}		
+			        		 
+			        			 catch(IndexOutOfBoundsException exception){
+				        			 
+				        			 JOptionPane.showMessageDialog(null, "The entered activity does not exist.", "Error: Activity Not Found", JOptionPane.ERROR_MESSAGE);	        	
+			        			 		}	
+		        		}
+		   
+		        	}
+		         }
+		        		
+		       }	
+            
             if(event.getSource() == process){
 
 
