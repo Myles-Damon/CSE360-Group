@@ -13,6 +13,7 @@ public class MainPanel extends JPanel {
     private JButton report;
     private JButton about;
     private JButton reset;
+    private JButton edit;
     private JButton quit;
     private JTextField name;
     private JTextField depend;
@@ -74,6 +75,10 @@ public class MainPanel extends JPanel {
 
         quit = new JButton("<html>"+ "quit" +"</html>");
         quit.addActionListener(new ButtonListener());
+	
+	edit = new JButton("<html>" + "edit" + "<html");
+	edit.addActionListener(new ButtonListener());
+	      
 
         criticalPath = new JButton("<html>"+ "critical path" +"</html>");
         criticalPath.addActionListener(new ButtonListener());
@@ -91,6 +96,7 @@ public class MainPanel extends JPanel {
         buttonPanel.add(help);
         buttonPanel.add(about);
         buttonPanel.add(reset);
+	buttonPanel.add(edit);
         buttonPanel.add(process);
         buttonPanel.add(criticalPath);
         buttonPanel.add(report);
