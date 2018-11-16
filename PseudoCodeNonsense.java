@@ -75,17 +75,21 @@ public class PseudoCodeNonsense
                 finalNodeList.add(nodeList.get(j).clone());
             }
         }
+        if (finalNodeList.isEmpty()) {
+            System.out.println("Loop detected");
+            return;
+        }
         System.out.println(finalNodeList.get(0).name);
         System.out.println("All final nodes found");
         return;
     }
 
-    public void traceAllPaths()
+    public boolean traceAllPaths()
     {
         // checks to make sure we're not processing an empty list
-        if(finalNodeList.get(0) == null || nodeList.get(0) == null)
+        if(finalNodeList.isEmpty() || nodeList.isEmpty())
         {
-            return;
+            return false;
         }
         for(int j = 0; j < finalNodeList.size(); j++)
         {
@@ -94,7 +98,7 @@ public class PseudoCodeNonsense
             System.out.println("final node " + finalNodeList.get(j).name + " evaluated");
         }
         System.out.println("trace all paths completed");
-        return;
+        return true;
     }
 
     public void traceAllPathsHelper(PERT_Node Node, String pathSoFar, int pathDuration)
@@ -133,13 +137,12 @@ public class PseudoCodeNonsense
         return;
     }
 
-    //for sorting pathList, quicksort, should be O(nlgn)-ish
     public void sortPathList(ArrayList<pathAndDuration> pathList) {
         for (int i = 1; i < pathList.size(); i++) {
             pathAndDuration key = new pathAndDuration(pathList.get(i).getPath(), pathList.get(i).getDuration());
             int j = i - 1;
 
-            while (j < 0 && pathList.get(j).getDuration() > key.getDuration()) {
+            while (j >= 0 && pathList.get(j).getDuration() > key.getDuration()) {
                 pathList.set(j+1, pathList.get(j));
                 j--;
             }

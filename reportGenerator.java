@@ -25,6 +25,7 @@ public class reportGenerator {
     }
 
     public void createReport() {
+        sortActivities(activities);
         try{
             writer.write("Report name: " + name + "\n");
             writer.write("Time: " + java.time.LocalTime.now() + "\n");
@@ -34,18 +35,23 @@ public class reportGenerator {
             //output activities, duration and dependencies
             for (int i = 0; i < activities.size(); i++) {
                 writer.write(activities.get(i).getName() +" : "+  activities.get(i).getDuration()+ "\n");
+                writer.write("\t[");
                 //loop through dependencies and write
                 for (int j = 0; j < activities.get(i).dependencies.length; j++) {
-                    writer.write("\t" + activities.get(i).dependencies[j] + "\n");
+                    writer.write(activities.get(i).dependencies[j]);
+                    if (j != activities.get(i).dependencies.length - 1) {
+                        writer.write(", ");
+                    }
                 }
-                writer.write("\n");
+                writer.write("]");
+                writer.write("\n\n");
             }
 
             //output paths and durations
             writer.write("___________________________________________\n");
             writer.write("Paths: \n");
             for (int i = 0; i < paths.size(); i++) {
-                writer.write(paths.get(i).getPath() + " : " + paths.get(i).getDuration() + "\n");
+                writer.write(paths.get(i).getPath() + " : " + paths.get(i).getDuration() + "\n\n");
             }
 
 
@@ -53,6 +59,19 @@ public class reportGenerator {
 
         }catch (IOException e){
             System.out.println(e);
+        }
+    }
+
+    public void sortActivities(ArrayList <PERT_Node> list) {
+        for (int i = 0; i < list.size(); i++) {
+            int key = (int)list.get(i).getName().charAt(0);
+            PERT_Node keyNode = new PERT_Node(list.get(i).getName(),list.get(i).dependencies,  list.get(i).getDuration());
+            int j = i - 1;
+            while (j >= 0 && (int)list.get(j).getName().charAt(0) > key) {
+                list.set(j + 1, list.get(j));
+                j--;
+            }
+            list.set(j + 1, keyNode);
         }
     }
 }

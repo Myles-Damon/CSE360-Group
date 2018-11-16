@@ -10,7 +10,7 @@ public class Window extends JFrame{
     private static void init(){
 
         final int APP_WIDTH = 1100;
-        final int APP_HEIGHT = 650;
+        final int APP_HEIGHT = 600;
 
         ArrayList<Activity> actList;
         actList = new ArrayList<Activity>();
@@ -42,7 +42,7 @@ public class Window extends JFrame{
 
         frame.setSize(APP_WIDTH, APP_HEIGHT);
 
-        Dimension minDim = new Dimension(1100, 650);
+        Dimension minDim = new Dimension(700, 600);
         frame.setMinimumSize(minDim);
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
