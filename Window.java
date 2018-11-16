@@ -9,8 +9,8 @@ public class Window extends JFrame{
 
     private static void init(){
 
-        final int APP_WIDTH = 1000;
-        final int APP_HEIGHT = 800;
+        final int APP_WIDTH = 1100;
+        final int APP_HEIGHT = 600;
 
         ArrayList<Activity> actList;
         actList = new ArrayList<Activity>();

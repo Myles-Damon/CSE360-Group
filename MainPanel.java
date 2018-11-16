@@ -96,7 +96,7 @@ public class MainPanel extends JPanel {
         buttonPanel.add(help);
         buttonPanel.add(about);
         buttonPanel.add(reset);
-	buttonPanel.add(edit);
+	    buttonPanel.add(edit);
         buttonPanel.add(process);
         buttonPanel.add(criticalPath);
         buttonPanel.add(report);
@@ -250,6 +250,7 @@ public class MainPanel extends JPanel {
                     time.setText("");
                     numberOfNodes = 0;
                     nodeList.clear();
+                    processBool = false;
                 }
             }
              if(event.getSource() == edit) {
@@ -326,6 +327,9 @@ public class MainPanel extends JPanel {
 	        				
 	        				System.out.println(nodeList.get(i).name);
 	        				System.out.println(nodeList.get(i).duration);
+
+                            //if edited, the list must be reprocessed + remind user to reprocess
+                            processBool = false;
 	        			 }
 	        			 
 	        		 }
@@ -353,7 +357,6 @@ public class MainPanel extends JPanel {
 		   
 		        	}
 		         }
-		        		
 		       }	
             
             if(event.getSource() == process){
@@ -372,18 +375,23 @@ public class MainPanel extends JPanel {
                     area.setText("");
 
                     objectForParsing.findFinalNodes();
-                    objectForParsing.traceAllPaths();
+                    boolean worked = objectForParsing.traceAllPaths();
                     System.out.println("finished finding and tracing");
                     objectForParsing.sortPathList(objectForParsing.arrayListOfPaths);
 
-                    String message = "";
-                    for (int i = objectForParsing.arrayListOfPaths.size()-1; i >= 0; i--)
-                    {
-                        message += objectForParsing.arrayListOfPaths.get(i).getPath() + " : " +objectForParsing.arrayListOfPaths.get(i).getDuration() + "\n";
-                        System.out.println(objectForParsing.arrayListOfPaths.get(i).getPath());
-                    }
+                    if (worked) {
+                        String message = "";
+                        for (int i = objectForParsing.arrayListOfPaths.size()-1; i >= 0; i--)
+                        {
+                            message += objectForParsing.arrayListOfPaths.get(i).getPath() + " : " +objectForParsing.arrayListOfPaths.get(i).getDuration() + "\n";
+                            System.out.println(objectForParsing.arrayListOfPaths.get(i).getPath());
+                        }
 
-                    JOptionPane.showMessageDialog(null, message, "output", JOptionPane.PLAIN_MESSAGE);
+                        JOptionPane.showMessageDialog(null, message, "output", JOptionPane.PLAIN_MESSAGE);
+                    }
+                    else {
+                        JOptionPane.showMessageDialog(null, "Input error/loop detected", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
 
                     // what is this for loop below for? - Myles
                     for(int i = 0; i< actList.size(); i++){
@@ -549,10 +557,16 @@ public class MainPanel extends JPanel {
                 }
             }
             if(event.getSource() == report) {
-
-                String reportName = JOptionPane.showInputDialog(null, "Report name:");
-                reportGenerator report = new reportGenerator(reportName, nodeList, objectForParsing.arrayListOfPaths);
-                report.createReport();
+                if (!processBool) {
+                    JOptionPane.showMessageDialog(null, "Please create/process your nodes first", "Critical Path ERROR", JOptionPane.INFORMATION_MESSAGE);
+                    System.out.println("Please process your nodes first");
+                }
+                else {
+                    String reportName = JOptionPane.showInputDialog(null, "Report name:");
+                    reportGenerator report = new reportGenerator(reportName, nodeList, objectForParsing.arrayListOfPaths);
+                    report.createReport();
+                    JOptionPane.showMessageDialog(null, "Report has been created", "Report Created", JOptionPane.PLAIN_MESSAGE);
+                }
             }
 
         } //end of actionPerformed method
