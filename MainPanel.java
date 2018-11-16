@@ -21,6 +21,9 @@ public class MainPanel extends JPanel {
     private JTextArea area;
     private JPanel inputPanel;
     private JPanel buttonPanel;
+    private JPanel names;
+    private JPanel deps;
+    private JPanel times;
     private Activity activity;
     private ArrayList<Activity> actList;
     private PseudoCodeNonsense objectForParsing;
@@ -36,11 +39,34 @@ public class MainPanel extends JPanel {
         this.actList = actList;
         this.nodeList = new ArrayList<PERT_Node>();
 
-        JLabel actName = new JLabel("<html>" + "NAME:" + "<br/>" + "Enter name of activity\n " + "</html>");
-        JLabel actDep = new JLabel("<html>" +"DEPENDENCIES:" + "<br/>" + "Enter dependencies of activity. Enter a comma between activities" + "</html>");
-        JLabel actTime = new JLabel("<html>" + "DURATION" + "<br/>" + "Enter the duration of the activity. (Positive, integer)" + "</html>");
+        JLabel actName = new JLabel("<html>" + "NAME:" + "</html>");
+        actName.setFont(new Font("SANS_SERIF", Font.BOLD, 14));
+         JLabel actDep = new JLabel("<html>" +"DEPENDENCIES:" + "</html>");
+         actDep.setFont(new Font("SANS_SERIF", Font.BOLD, 14));
+         JLabel actTime = new JLabel("<html>" + "DURATION:"  + "</html>");
+         actTime.setFont(new Font("SANS_SERIF", Font.BOLD, 14));
 
-
+        
+        JLabel nameDesc = new JLabel("<html>" + "Enter name of activity\n " + "</html>");
+        JLabel depDesc = new JLabel("<html>" + "Enter dependencies of activity. Enter a comma between activities" + "</html>");
+        JLabel timeDesc = new JLabel("<html>" + "Enter the duration of the activity. (Positive, integer)" + "</html>"); 
+        
+        
+        names = new JPanel();
+        names.setLayout(new GridLayout(2,1));
+        names.add(actName);
+        names.add(nameDesc);
+        
+        deps = new JPanel();
+        deps.setLayout(new GridLayout(2,1));
+        deps.add(actDep);
+        deps.add(depDesc);
+        
+        times = new JPanel();
+        times.setLayout(new GridLayout(2,1));
+        times.add(actTime);
+        times.add(timeDesc);
+     
         name = new JTextField();
         depend = new JTextField();
         time = new JTextField();
@@ -48,14 +74,17 @@ public class MainPanel extends JPanel {
 
         inputPanel = new JPanel();
         inputPanel.setLayout(new GridLayout(3,2));
-
-        inputPanel.add(actName);
+        
+       // inputPanel.add(actName);
+        inputPanel.add(names);
         inputPanel.add(name);
-
-        inputPanel.add(actDep);
+       
+        //inputPanel.add(actDep);
+        inputPanel.add(deps);
         inputPanel.add(depend);
 
-        inputPanel.add(actTime);
+      //  inputPanel.add(actTime);
+        inputPanel.add(times);
         inputPanel.add(time);
 
         add = new JButton("<html>"+ "Add Activity" +"</html>");
