@@ -26,11 +26,11 @@ public class reportGenerator {
 
     public void createReport() {
         try{
-            writer.write("Report name: " + name + "\n");
-            writer.write("Time: " + java.time.LocalTime.now() + "\n");
-            writer.write("Date: " + java.time.LocalDate.now() + "\n");
-            writer.write("___________________________________________\n");
-            writer.write("Activities: \n");
+            writer.write("\nReport name: " + name + "\n");
+            writer.write("\nTime: " + java.time.LocalTime.now() + "\n");
+            writer.write("\nDate: " + java.time.LocalDate.now() + "\n");
+            writer.write("\n___________________________________________\n");
+            writer.write("\nActivities: \n");
             //output activities, duration and dependencies
             for (int i = 0; i < activities.size(); i++) {
                 writer.write(activities.get(i).getName() +" : "+  activities.get(i).getDuration()+ "\n");
@@ -42,8 +42,8 @@ public class reportGenerator {
             }
 
             //output paths and durations
-            writer.write("___________________________________________\n");
-            writer.write("Paths: \n");
+            writer.write("\n___________________________________________\n");
+            writer.write("\nPaths: \n");
             for (int i = 0; i < paths.size(); i++) {
                 writer.write(paths.get(i).getPath() + " : " + paths.get(i).getDuration() + "\n");
             }
