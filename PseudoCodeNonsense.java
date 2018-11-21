@@ -93,7 +93,7 @@ public class PseudoCodeNonsense
         }
         for(int j = 0; j < finalNodeList.size(); j++)
         {
-            traceAllPathsHelper(finalNodeList.get(j), "", 0);
+            traceAllPathsHelper(finalNodeList.get(j), "", 0, 0);
 
             System.out.println("final node " + finalNodeList.get(j).name + " evaluated");
         }
@@ -101,8 +101,9 @@ public class PseudoCodeNonsense
         return true;
     }
 
-    public void traceAllPathsHelper(PERT_Node Node, String pathSoFar, int pathDuration)
+    public void traceAllPathsHelper(PERT_Node Node, String pathSoFar, int pathDuration, int nodesInPath)
     {
+		
         System.out.println(Node.dependencies[0]);
         // when recursion bottoms out, add the completed path to the arrayOfPaths and return
         if(Node.dependencies[0] == null || Node.dependencies[0].equals(""))
@@ -127,6 +128,14 @@ public class PseudoCodeNonsense
                 {
                     if(nodeList.get(k).name.equals(Node.dependencies[j]))
                     {
+						for(i = 0;i < nodesInPath; i++)
+						{
+							if(nodeList.get(k).name.equals(pathSoFar[i*3]))
+							{
+								System.out.println("Error: there's a loop");
+								return;
+							}
+						}
                         System.out.println("recursion taken, path so far: " + pathSoFar);
                         traceAllPathsHelper(nodeList.get(k), Node.name + " -> " + pathSoFar, pathDuration + Node.duration);
                     }
@@ -150,6 +159,11 @@ public class PseudoCodeNonsense
         }
     }
 
+	
+	
+	
+	
+	
 /*
 Need to fix algorithm so that it checks:
 --------------------------------------------
